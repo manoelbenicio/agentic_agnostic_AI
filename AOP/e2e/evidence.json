@@ -1,0 +1,442 @@
+{
+  "base_url": "http://127.0.0.1:8090",
+  "checks": {
+    "finops_rollup": "passed",
+    "health": "passed",
+    "metrics": "passed",
+    "ready": "passed",
+    "socket_lifecycle": "passed",
+    "terminal_lifecycle": "passed",
+    "topology_lateral_block": "passed",
+    "trace_filters": "passed",
+    "websocket_trace": "passed"
+  },
+  "gaps": [
+    "AOP has no public send_message/handoff endpoint yet; lateral block was proven by applying HerdMaster AclEngine to the effective ACL returned by /squads/{id}/topology.",
+    "HerdMaster :8080 returned 401 without bearer token in this environment, so socket-mode dispatch used the ADR-001 fallback path unless a tokenized HerdMaster client is added.",
+    "GET /health does not expose coupling_status yet; AppState has it, but the route response omits it."
+  ],
+  "generated_at": "2026-06-26T04:42:59.797302+00:00",
+  "responses": {
+    "agents": {
+      "Tech Lead": {
+        "agent_id": "agent-daf18274-8027-4bff-9eb1-7d70006913bd",
+        "label": "Tech Lead e2e-20260626T044259Z",
+        "metadata": {},
+        "pane_id": "e2e-20260626T044259Z-tech-lead",
+        "role": "orchestrator",
+        "stable_key": "e2e-20260626T044259Z/tech-lead",
+        "status": "active",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "vendor": "codex",
+        "workspace_id": "workspace-main"
+      },
+      "Worker A": {
+        "agent_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+        "label": "Worker A e2e-20260626T044259Z",
+        "metadata": {},
+        "pane_id": "e2e-20260626T044259Z-worker-a",
+        "role": "worker",
+        "stable_key": "e2e-20260626T044259Z/worker-a",
+        "status": "active",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "vendor": "codex",
+        "workspace_id": "workspace-main"
+      },
+      "Worker B": {
+        "agent_id": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+        "label": "Worker B e2e-20260626T044259Z",
+        "metadata": {},
+        "pane_id": "e2e-20260626T044259Z-worker-b",
+        "role": "worker",
+        "stable_key": "e2e-20260626T044259Z/worker-b",
+        "status": "active",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "vendor": "kiro",
+        "workspace_id": "workspace-main"
+      }
+    },
+    "finops": {
+      "rollup": {
+        "project_id": "project-e2e-20260626T044259Z",
+        "record_count": 2,
+        "seat_cost_usd": "0.20000000",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "token_cost_usd": "0.00020000",
+        "total_cost_usd": "0.20020000"
+      },
+      "seat_cost": {
+        "billing_mode": "monthly",
+        "cost_id": "cost-42142b40-490d-40fe-aa47-25cfc942bd6b",
+        "cost_usd": "0.20000000",
+        "engine": "seat",
+        "project_id": "project-e2e-20260626T044259Z",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "trace_id": "trace-e2e-20260626T044259Z",
+        "usage_units": {
+          "period_seconds": "3600",
+          "seat_seconds": "60",
+          "utilization_share": "0.01666666666666666666666666667"
+        }
+      },
+      "token_cost": {
+        "billing_mode": "pay_as_you_go",
+        "cost_id": "cost-db8367bd-147d-4d80-902d-d58f15ac8437",
+        "cost_usd": "0.00020000",
+        "engine": "token",
+        "project_id": "project-e2e-20260626T044259Z",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "trace_id": "trace-e2e-20260626T044259Z",
+        "usage_units": {
+          "input_tokens": "100",
+          "output_tokens": "50",
+          "total_tokens": "150"
+        }
+      }
+    },
+    "health": {
+      "status": "ok"
+    },
+    "metrics_excerpt": "# HELP aop_control_plane_up Control plane liveness\n# TYPE aop_control_plane_up gauge\naop_control_plane_up 1\n# HELP aop_finops_project_cost_usd Project cost by engine\n# TYPE aop_finops_project_cost_usd gauge\naop_finops_project_cost_usd{tenant_id=\"tenant-a\",project_id=\"project-a\",engine=\"total\"} 0\naop_finops_project_cost_usd{tenant_id=\"tenant-a\",project_id=\"project-a\",engine=\"token\"} 0\naop_finops_project_cost_usd{tenant_id=\"tenant-a\",project_id=\"project-a\",engine=\"seat\"} 0\n# HELP aop_finops_project_cost_records Cost record count\n# TYPE aop_finops_project_cost_records gauge\naop_finops_project_cost_records{tenant_id=\"tenant-a\",project_id=\"project-a\"} 0\n\n# HELP aop_trace_token_burn_total Token burn by agent and runtime\n# TYPE aop_trace_token_burn_total counter\n# HELP aop_trace_seat_seconds_total Seat seconds by agent and runtime\n# TYPE aop_trace_seat_seconds_total counter\n",
+    "ready": {
+      "checks": {
+        "postgres": true,
+        "redis": true
+      },
+      "status": "ready"
+    },
+    "stored_topology": {
+      "squad_id": "e2e-20260626T044259Z",
+      "stored": {
+        "edges": [
+          {
+            "source": "agent-daf18274-8027-4bff-9eb1-7d70006913bd",
+            "target": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124"
+          },
+          {
+            "source": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "target": "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+          },
+          {
+            "source": "agent-daf18274-8027-4bff-9eb1-7d70006913bd",
+            "target": "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+          },
+          {
+            "source": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "target": "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+          }
+        ],
+        "nodes": [
+          {
+            "id": "agent-daf18274-8027-4bff-9eb1-7d70006913bd",
+            "role": "orchestrator"
+          },
+          {
+            "id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "role": "worker"
+          },
+          {
+            "id": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "role": "worker"
+          }
+        ]
+      }
+    },
+    "tasks": {
+      "socket": {
+        "events": [
+          {
+            "cost_refs": [],
+            "details": {
+              "queue": {
+                "state": "queued",
+                "task_id": "task-socket-e2e-20260626T044259Z"
+              }
+            },
+            "event_id": "e01d7c60-fc43-4eac-a904-47c35dd829bd",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.910840Z",
+            "operation_mode": "socket",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "status": "queued",
+            "task_id": "task-socket-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {
+              "queue": {
+                "state": "claimed",
+                "task_id": "task-socket-e2e-20260626T044259Z"
+              }
+            },
+            "event_id": "b229860f-49f0-4a45-9832-7994fce3d7dc",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.910903Z",
+            "operation_mode": "socket",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "status": "claimed",
+            "task_id": "task-socket-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {
+              "queue": {
+                "state": "running",
+                "task_id": "task-socket-e2e-20260626T044259Z"
+              }
+            },
+            "event_id": "e064a464-2690-44c3-a865-5c2e5b01f09c",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.910919Z",
+            "operation_mode": "socket",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "status": "running",
+            "task_id": "task-socket-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {
+              "queue": {
+                "state": "done",
+                "task_id": "task-socket-e2e-20260626T044259Z"
+              }
+            },
+            "event_id": "fdaf15ef-22ab-4d5f-8ac5-bfeaa77da293",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.910936Z",
+            "operation_mode": "socket",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "status": "done",
+            "task_id": "task-socket-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          }
+        ],
+        "operation_mode": "socket",
+        "task_id": "task-socket-e2e-20260626T044259Z"
+      },
+      "terminal": {
+        "events": [
+          {
+            "cost_refs": [],
+            "details": {},
+            "event_id": "d17194c6-e5c5-41a3-8d1e-d11d2474af55",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.912128Z",
+            "operation_mode": "terminal",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "status": "queued",
+            "task_id": "task-terminal-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {
+              "runtime_ref": {
+                "metadata": {},
+                "mode": "terminal",
+                "native_ref": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+                "runtime_id": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+                "vendor": "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+              }
+            },
+            "event_id": "06da6edc-e954-464c-88de-dc5d00c9293a",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.912163Z",
+            "operation_mode": "terminal",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "status": "claimed",
+            "task_id": "task-terminal-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {},
+            "event_id": "f23b6064-17e8-43cd-b4a4-eff2e77f0c8a",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.912198Z",
+            "operation_mode": "terminal",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "status": "running",
+            "task_id": "task-terminal-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          },
+          {
+            "cost_refs": [],
+            "details": {
+              "agent_state": "done",
+              "metering": {
+                "cost_refs": [],
+                "measured_at": "2026-06-26T04:42:59.912221Z",
+                "runtime_id": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+                "usage_units": {
+                  "seat_seconds": "0"
+                }
+              }
+            },
+            "event_id": "b24fd82e-0c8e-4899-a9a8-b40674a8f141",
+            "message": null,
+            "occurred_at": "2026-06-26T04:42:59.912236Z",
+            "operation_mode": "terminal",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime": "agent-6eb73b40-e201-4479-9cd6-24e05553404b",
+            "status": "done",
+            "task_id": "task-terminal-e2e-20260626T044259Z",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "trace_id": null
+          }
+        ],
+        "operation_mode": "terminal",
+        "task_id": "task-terminal-e2e-20260626T044259Z"
+      }
+    },
+    "topology": {
+      "effective_topology": {
+        "default_policy": "deny",
+        "roles": [
+          {
+            "agents": [
+              "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+            ],
+            "can_dispatch_tasks": true,
+            "can_reassign_tasks": true,
+            "can_receive_from": [
+              "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+              "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+            ],
+            "can_send_to": [
+              "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+              "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+            ],
+            "name": "role_agent-daf18274-8027-4bff-9eb1-7d70006913bd_orchestrator"
+          },
+          {
+            "agents": [
+              "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124"
+            ],
+            "can_dispatch_tasks": false,
+            "can_reassign_tasks": false,
+            "can_receive_from": [
+              "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+            ],
+            "can_send_to": [
+              "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+            ],
+            "name": "role_agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124_worker"
+          },
+          {
+            "agents": [
+              "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+            ],
+            "can_dispatch_tasks": false,
+            "can_reassign_tasks": false,
+            "can_receive_from": [
+              "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+            ],
+            "can_send_to": [
+              "agent-daf18274-8027-4bff-9eb1-7d70006913bd"
+            ],
+            "name": "role_agent-6eb73b40-e201-4479-9cd6-24e05553404b_worker"
+          }
+        ]
+      },
+      "squad_id": "e2e-20260626T044259Z"
+    },
+    "topology_violation": {
+      "blocked": true,
+      "from_agent": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+      "reason": "AclEngine default_policy=deny and no worker_a -> worker_b edge",
+      "to_agent": "agent-6eb73b40-e201-4479-9cd6-24e05553404b"
+    },
+    "tracing": {
+      "by_agent": [
+        {
+          "agent_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+          "details": {},
+          "event_id": "trace-event-e80fc5b6-065a-44c6-bfe2-7c87b11d7b6f",
+          "issue_id": "issue-e2e-20260626T044259Z",
+          "layer": "l1_execution",
+          "message": "E2E trace burn sample",
+          "project_id": "project-e2e-20260626T044259Z",
+          "runtime_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+          "seat_seconds": 7,
+          "signal_type": "burn",
+          "tenant_id": "tenant-e2e-20260626T044259Z",
+          "token_burn": 42,
+          "trace_id": "trace-e2e-20260626T044259Z"
+        }
+      ],
+      "by_runtime": [
+        {
+          "agent_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+          "details": {},
+          "event_id": "trace-event-e80fc5b6-065a-44c6-bfe2-7c87b11d7b6f",
+          "issue_id": "issue-e2e-20260626T044259Z",
+          "layer": "l1_execution",
+          "message": "E2E trace burn sample",
+          "project_id": "project-e2e-20260626T044259Z",
+          "runtime_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+          "seat_seconds": 7,
+          "signal_type": "burn",
+          "tenant_id": "tenant-e2e-20260626T044259Z",
+          "token_burn": 42,
+          "trace_id": "trace-e2e-20260626T044259Z"
+        }
+      ],
+      "posted": {
+        "agent_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+        "details": {},
+        "event_id": "trace-event-e80fc5b6-065a-44c6-bfe2-7c87b11d7b6f",
+        "issue_id": "issue-e2e-20260626T044259Z",
+        "layer": "l1_execution",
+        "message": "E2E trace burn sample",
+        "project_id": "project-e2e-20260626T044259Z",
+        "runtime_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+        "seat_seconds": 7,
+        "signal_type": "burn",
+        "tenant_id": "tenant-e2e-20260626T044259Z",
+        "token_burn": 42,
+        "trace_id": "trace-e2e-20260626T044259Z"
+      },
+      "websocket": {
+        "available": true,
+        "message": [
+          {
+            "agent_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "details": {},
+            "event_id": "trace-event-e80fc5b6-065a-44c6-bfe2-7c87b11d7b6f",
+            "issue_id": "issue-e2e-20260626T044259Z",
+            "layer": "l1_execution",
+            "message": "E2E trace burn sample",
+            "project_id": "project-e2e-20260626T044259Z",
+            "runtime_id": "agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124",
+            "seat_seconds": 7,
+            "signal_type": "burn",
+            "tenant_id": "tenant-e2e-20260626T044259Z",
+            "token_burn": 42,
+            "trace_id": "trace-e2e-20260626T044259Z"
+          }
+        ],
+        "url": "ws://127.0.0.1:8090/ws/tracing/agents/agent-daa1f6c0-8ad2-4f66-9120-ad162c1e2124"
+      }
+    }
+  },
+  "result": "passed",
+  "run_id": "e2e-20260626T044259Z"
+}

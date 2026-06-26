@@ -1,0 +1,69 @@
+[paths]
+config_dir = "~/.config/herdmaster"
+db = "herdmaster.db"
+socket = "herdmaster.sock"
+log = "herdmaster.log"
+
+[watchdog]
+soft_timeout_s = 10.0
+hard_timeout_s = 30.0
+poll_interval_s = 15
+max_retries = 3
+tertiary_hash_interval_s = 30
+
+[bus]
+socket_path = "~/.config/herdmaster/herdmaster.sock"
+message_ttl_s = 300
+
+[herdr]
+socket_path = "~/.config/herdr/herdr.sock"
+
+[acl]
+default_policy = "deny"
+
+# === Squad_The_SEALS — Mapeamento Oficial (2026-06-24) ===
+# AGY_Opus-46        -> w6:p1 (orchestrator)
+# AGY_Gemini_PRO-31  -> w6:p2 (worker)
+# OpenAI_Codex-55#1  -> w6:p5 (worker)
+# OpenAI_Codex-55#2  -> w6:p6 (worker)
+
+[[acl.roles]]
+name = "orchestrator"
+agents = ["w6:p1"]
+can_send_to = ["*"]
+can_receive_from = ["*"]
+can_dispatch_tasks = true
+can_reassign_tasks = true
+
+[[acl.roles]]
+name = "worker"
+agents = ["w6:p2", "w6:p5", "w6:p6"]
+can_send_to = ["orchestrator"]
+can_receive_from = ["orchestrator"]
+can_dispatch_tasks = false
+can_reassign_tasks = false
+
+[[acl.roles]]
+name = "peer_reviewer"
+agents = ["w6:p2", "w6:p5"]
+can_send_to = ["orchestrator", "peer_reviewer"]
+can_receive_from = ["orchestrator", "peer_reviewer"]
+can_dispatch_tasks = false
+can_reassign_tasks = false
+
+[[acl.roles]]
+name = "observer"
+agents = []
+can_send_to = []
+can_receive_from = ["*"]
+can_dispatch_tasks = false
+can_reassign_tasks = false
+
+[api]
+bind = "127.0.0.1"
+port = 8080
+token = "admin"
+
+[logging]
+level = "INFO"
+json = true

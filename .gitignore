@@ -1,0 +1,31 @@
+# --- secrets / env ---
+**/.env
+**/.env.local
+# keep templates
+!**/.env.example
+
+# --- databases ---
+**/*.db
+**/*.db-wal
+**/*.db-shm
+
+# --- python ---
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.egg-info/
+**/.pytest_cache/
+
+# --- node / next ---
+**/node_modules/
+**/.next/
+
+# --- runtime / logs ---
+AOP/ops/run/
+AOP/ops/logs/
+**/*.log
+
+# --- os ---
+.DS_Store
+Thumbs.db
+**/.git_disabled/
