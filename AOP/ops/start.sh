@@ -44,15 +44,18 @@ else
   record_listener_pid "HerdMaster" "${HERDMASTER_PORT}" "${HERDMASTER_PID_FILE}"
 fi
 
-if [[ "$(http_code http://127.0.0.1:8090/health)" == "200" ]]; then
-  log "AOP control-plane already healthy on :8090"
+if [[ "$(http_code http://127.0.0.1:8090/health)" == "200" ]] && aop_control_plane_coupling_connected; then
+  log "AOP control-plane already healthy on :8090 with HerdMaster coupling connected"
   record_listener_pid "AOP control-plane" "${AOP_API_PORT}" "${AOP_API_PID_FILE}"
 else
   kill_port_processes "AOP control-plane" "${AOP_API_PORT}"
-  log "starting AOP control-plane on :8090"
+  log "starting AOP control-plane on :8090 with HerdMaster token from runtime config"
   (
     cd "${ROOT_DIR}"
+    export HERDMASTER_TOKEN
+    HERDMASTER_TOKEN="$(herdmaster_token)"
     setsid env DATABASE_URL="${DATABASE_URL}" REDIS_URL="${REDIS_URL}" HERDMASTER_URL="http://127.0.0.1:8080" \
+      HERDMASTER_TOKEN="${HERDMASTER_TOKEN}" \
       PYTHONPATH="${AOP_DIR}/control-plane:${HERDMASTER_DIR}/src" \
       "$(uvicorn_bin)" app.main:app --host 127.0.0.1 --port 8090 \
       >>"${LOG_DIR}/aop-control-plane.log" 2>&1 < /dev/null &

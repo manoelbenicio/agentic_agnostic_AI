@@ -10,6 +10,7 @@ from typing import Any
 import psycopg
 import redis
 from fastapi import Depends, FastAPI, HTTPException, Response, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 
 from core import OperationMode, TaskBudget, TaskEnvelope
 from finops import Attribution, SeatUsage, TokenUsage
@@ -41,7 +42,15 @@ def create_app(settings: Settings | None = None, state: AppState | None = None) 
         finally:
             await close_state(app.state.container)
 
+    effective_settings = settings or Settings.from_env()
     app = FastAPI(title="Agnostic Orchestration Platform Control Plane", lifespan=lifespan)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=list(effective_settings.cors_origins),
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     def container() -> AppState:
         return app.state.container

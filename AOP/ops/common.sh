@@ -297,6 +297,12 @@ herdmaster_auth_header() {
   printf 'Authorization: Bearer %s' "$(herdmaster_token)"
 }
 
+aop_control_plane_coupling_connected() {
+  local payload
+  payload="$(curl -sS --max-time 5 "http://${LOCAL_HOST}:${AOP_API_PORT}/health" 2>/dev/null || true)"
+  [[ "${payload}" == *'"coupling":{"status":"connected"'* ]]
+}
+
 uvicorn_bin() {
   if [[ -x "/tmp/aop-control-plane-venv/bin/uvicorn" ]]; then
     printf '%s\n' "/tmp/aop-control-plane-venv/bin/uvicorn"

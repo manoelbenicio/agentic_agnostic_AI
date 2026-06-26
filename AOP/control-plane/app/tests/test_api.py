@@ -1,5 +1,31 @@
 from __future__ import annotations
 
+import pytest
+
+
+@pytest.fixture(autouse=True)
+def _use_local_terminal_adapter(monkeypatch):
+    monkeypatch.setenv("HERDR_SOCKET_PATH", "/tmp/aop-control-plane-test-no-herdr.sock")
+
+
+def test_cors_allows_frontend_origin(api_client):
+    origin = "http://127.0.0.1:13000"
+
+    get_response = api_client.get("/agents", headers={"Origin": origin})
+    assert get_response.status_code == 200
+    assert get_response.headers["access-control-allow-origin"] == origin
+
+    preflight = api_client.options(
+        "/agents",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert preflight.status_code in {200, 204}
+    assert preflight.headers["access-control-allow-origin"] == origin
+    assert "GET" in preflight.headers["access-control-allow-methods"]
+
 
 def test_health_ready_and_metrics(api_client):
     health = api_client.get("/health")
